@@ -15,7 +15,9 @@ class LopHoc implements LopHocS {
   LopHoc({
     required this.tenLopHoc,
     required this.soLuong,
-  });
+  }) {
+    dsLopHoc.add(this);
+  }
   int remainMembers() => soLuong - dsHocVien.length;
 
   bool push(HocVien hv) {
@@ -198,11 +200,6 @@ void main() {
   Ios ios = Ios(tenLopHoc: 'Ios', soLuong: 13);
   Web web = Web(tenLopHoc: 'Web', soLuong: 14);
 
-  dsLopHoc.add(flutter);
-  dsLopHoc.add(android);
-  dsLopHoc.add(ios);
-  dsLopHoc.add(web);
-
   displayNumberOfLessons(dsLopHoc);
 
   android.setSoBuoiHoc = 18;
@@ -218,5 +215,5 @@ void displayNumberOfLessons(List<LopHoc> dsLopHoc) {
   for (var lopHoc in dsLopHoc) {
     print('Số buổi học của lóp ${lopHoc.tenLopHoc} là: ${lopHoc.soBuoiHoc}');
   }
-  print('\n');
+  print('end\n');
 }
