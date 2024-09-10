@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 class Stack {
+  Stack(this.capacity);
+
   final int capacity;
   final List<String> list = <String>[];
-
-  Stack(this.capacity);
 
   bool isEmpty() {
     return list.isEmpty;

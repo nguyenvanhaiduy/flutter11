@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 class Queue {
+  Queue(this.capacity);
+
   final int capacity;
   final List<String> list = <String>[];
 
-  Queue(this.capacity);
   bool isFull() {
     return list.length == capacity;
   }

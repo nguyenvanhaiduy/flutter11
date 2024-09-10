@@ -1,20 +1,19 @@
 import 'dart:developer';
 
 class Device {
+  Device(this.id, this.name, this.systemName, this.manufacturer);
   final String id;
   final String name;
   final String systemName;
   final Manufacturer manufacturer;
-
-  Device(this.id, this.name, this.systemName, this.manufacturer);
 }
 
 class Manufacturer {
+  Manufacturer(this.id, this.name);
   final String id;
   final String name;
   final List<Device> listDevice = [];
 
-  Manufacturer(this.id, this.name);
   bool push(Device device) {
     if (id == device.manufacturer.id) {
       listDevice.add(device);
