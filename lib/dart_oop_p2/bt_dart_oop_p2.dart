@@ -183,14 +183,25 @@ class HocVien {
   }
 }
 
+// Hàm khởi tạo toàn bộ học viên còn thiếu
 void themHv(LopHoc lopHoc) {
   final random = Random();
+  String letter;
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  List<String> arrLetters = [];
+  for (int i = 0; i < letters.length; i++) {
+    letter = letters[i].trim();
+    if (letter.isNotEmpty) {
+      arrLetters.add(letters[i].trim());
+    }
+  }
 
   while (lopHoc.remainMembers() > 0) {
-    final tenHv = letters[random.nextInt(26)];
+    int index = random.nextInt(arrLetters.length);
+    final tenHv = letters[index];
     HocVien a = HocVien(name: tenHv);
-    lopHoc.push(a);
+    bool check = lopHoc.push(a);
+    if (check) arrLetters.removeAt(index);
   }
 }
 
