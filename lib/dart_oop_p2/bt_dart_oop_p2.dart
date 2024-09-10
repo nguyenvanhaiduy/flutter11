@@ -1,16 +1,13 @@
 import 'dart:math';
 
 final List<LopHoc> dsLopHoc = [];
+// test
 
-abstract class LopHocS {
-  late int soBuoiHoc;
-  void updateSoBuoiHoc();
-}
-
-class LopHoc implements LopHocS {
+class LopHoc {
   final String tenLopHoc;
   final int soLuong;
-  final List<HocVien> dsHocVien = [];
+  late int soBuoiHoc = 0;
+  final Set<HocVien> dsHocVien = {};
 
   LopHoc({
     required this.tenLopHoc,
@@ -35,132 +32,85 @@ class LopHoc implements LopHocS {
     return false;
   }
 
-  @override
-  late int soBuoiHoc;
+  void updateSoBuoiHoc(int baseSoBuoiHoc) {
+    late int tmp;
+    if (this is Flutter) {
+      if (baseSoBuoiHoc < 12) {
+        throw Exception('số buổi học phải lớn hoặc bằng 12');
+      }
+      tmp = baseSoBuoiHoc;
+    } else if (this is Android) {
+      if (baseSoBuoiHoc < 17) {
+        throw Exception('số buổi học phải lớn học bằng 17');
+      }
+      tmp = baseSoBuoiHoc - 5;
+    } else if (this is Ios) {
+      if (baseSoBuoiHoc < 20) {
+        throw Exception('số buổi học phải lớn học bằng 20');
+      }
+      tmp = baseSoBuoiHoc - 8;
+    } else if (this is Web) {
+      if (baseSoBuoiHoc < 10) {
+        throw Exception('số buổi học phải lớn học bằng 10');
+      }
+      tmp = baseSoBuoiHoc + 2;
+    }
 
-  @override
-  void updateSoBuoiHoc() {}
+    for (var lopHoc in dsLopHoc) {
+      if (lopHoc is Flutter) {
+        lopHoc.soBuoiHoc = tmp;
+      } else if (lopHoc is Android) {
+        lopHoc.soBuoiHoc = tmp + 5;
+      } else if (lopHoc is Ios) {
+        lopHoc.soBuoiHoc = tmp + 8;
+      } else if (lopHoc is Web) {
+        lopHoc.soBuoiHoc = tmp - 2;
+      }
+    }
+  }
 }
 
-class Flutter extends LopHoc {
-  @override
-  int soBuoiHoc = 12;
-
+class Flutter extends LopHoc
+    with BuildDestopApp, BuildIos, BuidAndroid, BuildWeb {
   Flutter({
     required super.tenLopHoc,
     required super.soLuong,
   });
-  void builDesktopApp() {}
-  void buildAndroid() {}
-  void buildIos() {}
-  void buildWeb() {}
-
-  set setSoBuoiHoc(int value) {
-    if (value < 12) {
-      throw Exception('số buổi học phải lớn hoặc bằng 12');
-    }
-    soBuoiHoc = value;
-    updateSoBuoiHoc();
-  }
-
-  @override
-  void updateSoBuoiHoc() {
-    for (var lopHoc in dsLopHoc) {
-      if (lopHoc is Android) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 5;
-      } else if (lopHoc is Ios) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 8;
-      } else if (lopHoc is Web) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 2;
-      }
-    }
-  }
 }
 
-class Android extends LopHoc {
-  @override
-  int soBuoiHoc = 17;
-
+class Android extends LopHoc with BuidAndroid {
   Android({required super.tenLopHoc, required super.soLuong});
-  void buildAndroid() {}
-
-  set setSoBuoiHoc(int value) {
-    if (value < 17) {
-      throw Exception('số buổi học phải lớn học bằng 17');
-    }
-    soBuoiHoc = value;
-    updateSoBuoiHoc();
-  }
-
-  @override
-  void updateSoBuoiHoc() {
-    for (var lopHoc in dsLopHoc) {
-      if (lopHoc is Flutter) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 5;
-      } else if (lopHoc is Ios) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 3;
-      } else if (lopHoc is Web) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 7;
-      }
-    }
-  }
 }
 
-class Ios extends LopHoc {
-  @override
-  int soBuoiHoc = 20;
-
+class Ios extends LopHoc with BuildIos {
   Ios({required super.tenLopHoc, required super.soLuong});
-  void buildIos() {}
+}
 
-  set setSoBuoiHoc(int value) {
-    if (value < 20) {
-      throw Exception('số buổi học phải lớn học bằng 20');
-    }
-    soBuoiHoc = value;
-    updateSoBuoiHoc();
-  }
+class Web extends LopHoc with BuildWeb {
+  Web({required super.tenLopHoc, required super.soLuong});
+}
 
-  @override
-  void updateSoBuoiHoc() {
-    for (var lopHoc in dsLopHoc) {
-      if (lopHoc is Flutter) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 8;
-      } else if (lopHoc is Android) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 3;
-      } else if (lopHoc is Web) {
-        lopHoc.soBuoiHoc = soBuoiHoc - 10;
-      }
-    }
+mixin BuidAndroid {
+  String printBuildAndoid() {
+    return "Build Android";
   }
 }
 
-class Web extends LopHoc {
-  @override
-  int soBuoiHoc = 10;
-
-  Web({required super.tenLopHoc, required super.soLuong});
-  void buildWeb() {}
-
-  set setSoBuoiHoc(int value) {
-    if (value < 10) {
-      throw Exception('số buổi học phải lớn học bằng 10');
-    }
-    soBuoiHoc = value;
-    updateSoBuoiHoc();
+mixin BuildIos {
+  String printBuildIos() {
+    return "Build Ios";
   }
+}
 
-  @override
-  void updateSoBuoiHoc() {
-    for (var lopHoc in dsLopHoc) {
-      if (lopHoc is Flutter) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 2;
-      } else if (lopHoc is Android) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 7;
-      } else if (lopHoc is Ios) {
-        lopHoc.soBuoiHoc = soBuoiHoc + 10;
-      }
-    }
+mixin BuildWeb {
+  String printBuildWeb() {
+    return "Build Web";
+  }
+}
+
+mixin BuildDestopApp {
+  String printBuildDestopApp() {
+    return "Build Destop App";
   }
 }
 
@@ -211,14 +161,15 @@ void main() {
   Ios ios = Ios(tenLopHoc: 'Ios', soLuong: 13);
   Web web = Web(tenLopHoc: 'Web', soLuong: 14);
 
+  flutter.updateSoBuoiHoc(12);
   displayNumberOfLessons(dsLopHoc);
 
-  android.setSoBuoiHoc = 18;
+  android.updateSoBuoiHoc(18);
   displayNumberOfLessons(dsLopHoc);
 
-  // ios.setSoBuoiHoc = 23;
+  // ios.updateSoBuoiHoc(23, ios);
   // displayNumberOfLessons(dsLopHoc);
-  // web.setSoBuoiHoc = 15;
+  // web.updateSoBuoiHoc(15, web);
   // displayNumberOfLessons(dsLopHoc);
 }
 
