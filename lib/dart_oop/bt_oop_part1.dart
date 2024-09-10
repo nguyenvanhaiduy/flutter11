@@ -162,3 +162,4 @@ void themHv(LopHoc lopHoc) {
     if (check) arrLetters.removeAt(index);
   }
 }
+// fix
