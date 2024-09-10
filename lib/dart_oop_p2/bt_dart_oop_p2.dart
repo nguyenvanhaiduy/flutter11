@@ -167,10 +167,10 @@ void main() {
   android.updateSoBuoiHoc(18);
   displayNumberOfLessons(dsLopHoc);
 
-  // ios.updateSoBuoiHoc(23, ios);
-  // displayNumberOfLessons(dsLopHoc);
-  // web.updateSoBuoiHoc(15, web);
-  // displayNumberOfLessons(dsLopHoc);
+  ios.updateSoBuoiHoc(23);
+  displayNumberOfLessons(dsLopHoc);
+  web.updateSoBuoiHoc(15);
+  displayNumberOfLessons(dsLopHoc);
 }
 
 void displayNumberOfLessons(List<LopHoc> dsLopHoc) {
