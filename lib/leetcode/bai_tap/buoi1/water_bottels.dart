@@ -10,11 +10,11 @@ int waterBottels(int numBottles, int numExchange) {
   count += numBottles % numExchange;
 
   while (count >= numExchange) {
-    count ~/= numExchange;
-    result += count;
-
-    if (count > numExchange) {
-      count += (count % numExchange);
+    int tmp = count ~/ numExchange;
+    result += tmp;
+    count = (count % numExchange + tmp);
+    if (count < numExchange) {
+      break;
     }
   }
 
